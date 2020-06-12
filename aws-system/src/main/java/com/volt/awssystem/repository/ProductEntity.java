@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -16,17 +18,21 @@ public class ProductEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Type(type = "uuid-char")
 	@Column(name = "id", insertable = false, updatable = false, nullable = false)
 	private UUID productId;
 
+	@Column(name = "name", nullable = false)
 	private String productName;
 
+	@Column(nullable = false)
 	private float price;
 
+	@Column(nullable = false)
 	private boolean productOn;
 
 	@JsonBackReference
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private ShopEntity inShop;
 
 	// Getter Setters
@@ -75,9 +81,9 @@ public class ProductEntity {
 		this.productOn = true;
 	}
 
+	
 	protected ProductEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 }

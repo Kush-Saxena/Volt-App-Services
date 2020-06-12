@@ -1,0 +1,53 @@
+{
+  "name": "pinte ki shop",
+  "hno": "10",
+  "addressLine1": "farzi colony",
+  "addressLine2": "tajganj",
+  "city": "agra",
+  "state": "uttar pradesh",
+  "pincode": "101001",
+  "categories": "food,milk",
+  "opentime": "09:00:00",
+  "openhours": "7",
+  "delivertime": "2"
+}
+
+{
+  "name": "kush shop",
+  "hno": "122",
+  "addressLine1": "main villa",
+  "addressLine2": "random",
+  "city": "moradabad",
+  "state": "uttar pradesh",
+  "pincode": "244001",
+  "categories": "computers,food",
+  "opentime": "09:30:00",
+  "openhours": "5",
+  "delivertime": "7"
+}
+{
+  "name": "gaurShop",
+  "hno": "41",
+  "addressLine1": "shiv colony",
+  "addressLine2": "koi mohalla",
+  "city": "gurugram",
+  "state": "haryana",
+  "pincode": "910129",
+  "categories": "momos,chinese",
+  "opentime": "08:50:00",
+  "openhours": "6",
+  "delivertime": "1"
+}
+{
+  "name": "aviral ki dukan",
+  "hno": "123",
+  "addressLine1": "calton school",
+  "addressLine2": "line par",
+  "city": "moradabad",
+  "state": "Uttar pradesh",
+  "pincode": "244001",
+  "categories": "chicken",
+  "opentime": "08:45:00",
+  "openhours": "5",
+  "delivertime": "3"
+}

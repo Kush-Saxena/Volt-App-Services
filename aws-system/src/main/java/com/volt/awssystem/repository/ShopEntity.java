@@ -1,6 +1,6 @@
 package com.volt.awssystem.repository;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,17 +17,21 @@ import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.volt.awssystem.jsonconsumer.ConsumerShopData;
 
 @Entity
 public class ShopEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Type(type = "uuid-char")
 	@Column(name = "id", insertable = false, updatable = false, nullable = false)
 	private UUID shopId;
 
-	@Column(name = "Name", length = 20, unique = true)
+	@Column(name = "name", length = 20, unique = true, nullable = false)
 	private String shopName;
 
 	@JsonManagedReference
@@ -39,36 +43,39 @@ public class ShopEntity {
 
 	private String mainCategories;
 
-	@Column(name = "rating", precision = 2, scale = 1)
+	@Column(name = "rating", precision = 2, scale = 1, nullable = false)
 	private float rating;
 
-	private LocalDateTime openingTime;
+	@Column(nullable = false)
+	private LocalTime openingTime;
 
-	private LocalDateTime openHours;
+	@Column(nullable = false)
+	private int openHours;
 
 	@Transient
-	private LocalDateTime closingTime;
+	private LocalTime closingTime;
 
-	private LocalDateTime deliveryTime;
+	@Column(nullable = false)
+	private int deliveryTime;
 
 	// constructors
 
-	public ShopEntity(String shopName, AddressEntity address, String mainCategories, LocalDateTime openingTime,
-			LocalDateTime openHours, LocalDateTime deliveryTime) {
+	public ShopEntity(ConsumerShopData shopData) {
 		super();
-		this.shopName = shopName;
-		this.address = address;
-		address.setShop(this);
-		this.mainCategories = mainCategories;
-		this.openingTime = openingTime;
-		this.openHours = openHours;
-		this.deliveryTime = deliveryTime;
+		this.shopName = shopData.getName();
+		AddressEntity shopAddress = new AddressEntity(shopData.getHno(), shopData.getAddressLine1(),
+				shopData.getAddressLine2(), shopData.getPincode(), shopData.getState(), shopData.getCity(), this);
+		this.address = shopAddress;
+		this.mainCategories = shopData.getCategories();
+		this.openingTime = shopData.getOpentime();
+		this.openHours = shopData.getOpenhours();
+		this.deliveryTime = shopData.getDelivertime();
 
 	}
 
 	@PostLoad
 	private void populateClosingTime() {
-		this.closingTime = openingTime.plusHours(openHours.getHour());
+		this.closingTime = openingTime.plusHours(openHours);
 	}
 
 	protected ShopEntity() {
@@ -116,35 +123,35 @@ public class ShopEntity {
 		this.rating = rating;
 	}
 
-	public LocalDateTime getOpeningTime() {
+	public LocalTime getOpeningTime() {
 		return openingTime;
 	}
 
-	public void setOpeningTime(LocalDateTime openingTime) {
+	public void setOpeningTime(LocalTime openingTime) {
 		this.openingTime = openingTime;
 	}
 
-	public LocalDateTime getOpenHours() {
+	public int getOpenHours() {
 		return openHours;
 	}
 
-	public void setOpenHours(LocalDateTime openHours) {
+	public void setOpenHours(int openHours) {
 		this.openHours = openHours;
 	}
 
-	public LocalDateTime getClosingTime() {
+	public LocalTime getClosingTime() {
 		return closingTime;
 	}
 
-	public void setClosingTime(LocalDateTime closingTime) {
+	public void setClosingTime(LocalTime closingTime) {
 		this.closingTime = closingTime;
 	}
 
-	public LocalDateTime getDeliveryTime() {
+	public int getDeliveryTime() {
 		return deliveryTime;
 	}
 
-	public void setDeliveryTime(LocalDateTime deliveryTime) {
+	public void setDeliveryTime(int deliveryTime) {
 		this.deliveryTime = deliveryTime;
 	}
 
@@ -155,7 +162,6 @@ public class ShopEntity {
 	public void addProduct(String productName, float price) {
 		ProductEntity product = new ProductEntity(productName, price, this);
 		products.add(product);
-
 	}
 
 	@Override

@@ -22,17 +22,17 @@ public class AddressEntity implements Cloneable {
 	@Column(updatable = false, insertable = false, nullable = false)
 	private UUID id;
 
-	private String hno = "default";
+	private String hno;
 
-	private String addressLine1 = "default";
+	private String addressLine1;
 
-	private String addressLine2 = "default";
+	private String addressLine2;
 
-	private String pinCode = "default";
+	private String pinCode;
 
-	private String state = "default";
+	private String state;
 
-	private String city = "default";
+	private String city;
 
 	@JsonBackReference
 	@OneToOne
@@ -99,7 +99,7 @@ public class AddressEntity implements Cloneable {
 	// Does not allow an empty address.
 
 	public AddressEntity(String hno, String addressLine1, String addressLine2, String pinCode, String state,
-			String city) {
+			String city, ShopEntity shop) {
 		super();
 		this.hno = hno;
 		this.addressLine1 = addressLine1;
@@ -107,11 +107,12 @@ public class AddressEntity implements Cloneable {
 		this.pinCode = pinCode;
 		this.state = state;
 		this.city = city;
+		this.shop = shop;
 	}
 
 	@Override
 	protected Object clone() {
-		return new AddressEntity(hno, addressLine1, addressLine2, pinCode, state, city);
+		return new AddressEntity(hno, addressLine1, addressLine2, pinCode, state, city, shop);
 	}
 
 	@Override
@@ -134,6 +135,7 @@ public class AddressEntity implements Cloneable {
 				+ pinCode + ", state=" + state + ", city=" + city;
 	}
 
+	// this default constructor is just for jpa to use reflextion to get data.
 	protected AddressEntity() {
 		super();
 		// TODO Auto-generated constructor stub
