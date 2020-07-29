@@ -31,16 +31,7 @@ public class ConsumerShopData {
 
 	private int delivertime;
 
-	// To String
-
-	@Override
-	public String toString() {
-		return "ConsumerShopData [name=" + name + ", hno=" + hno + ", addressLine1=" + addressLine1 + ", addressLine2="
-				+ addressLine2 + ", city=" + city + ", state=" + state + ", pincode=" + pincode + ", categories="
-				+ categories + ", opentime=" + opentime + ", openhours=" + openhours + ", delivertime=" + delivertime
-				+ "]";
-	}
-
+	
 	// Getter setters
 
 	public String getName() {

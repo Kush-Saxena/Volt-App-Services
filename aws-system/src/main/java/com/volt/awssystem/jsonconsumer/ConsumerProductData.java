@@ -11,6 +11,16 @@ public class ConsumerProductData {
 
 	private float price;
 
+	private boolean isOn = true;
+
+	public boolean isOn() {
+		return isOn;
+	}
+
+	public void setOn(boolean isOn) {
+		this.isOn = isOn;
+	}
+
 	public UUID getShopid() {
 		return shopid;
 	}
@@ -34,6 +44,5 @@ public class ConsumerProductData {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-
 
 }

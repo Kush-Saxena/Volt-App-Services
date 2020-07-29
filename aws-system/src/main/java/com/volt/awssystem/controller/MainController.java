@@ -5,10 +5,12 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,6 +25,7 @@ import com.volt.awssystem.service.IShopService;
 //Fix closing time issue.
 //Fix addingProducts issue.
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class MainController {
 
@@ -39,36 +42,7 @@ public class MainController {
 
 		return null;
 	}
-
-	@GetMapping("/shops")
-	public String getAllShops() {
-
-		List<ShopEntity> allshops = shopservice.getAllShops();
-		String allShopsJson = "Nothing";
-		try {
-			allShopsJson = ObjectParser.writeValueAsString(allshops);
-		} catch (JsonProcessingException e) {
-			System.out.println(e.getMessage());
-			// e.printStackTrace();
-		}
-
-		return allShopsJson;
-
-	}
-
-	@GetMapping("/shops/{pattern}")
-	public String getShopByName(@PathVariable(name = "pattern") String pattern) {
-
-		List<ShopEntity> matchShop = shopservice.getShopByName(pattern);
-		String matchedShopJson = "Nothing";
-		try {
-			matchedShopJson = ObjectParser.writeValueAsString(matchShop);
-		} catch (JsonProcessingException e) {
-			System.out.println(e.getMessage());
-		}
-
-		return matchedShopJson;
-	}
+	
 
 	@PostMapping(value = "/shops", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String addShop(@RequestBody ConsumerShopData shopData) {
@@ -78,7 +52,7 @@ public class MainController {
 		return ("Added shop with id: " + result);
 	}
 
-	@PostMapping(value = "/product", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/products", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String addProduct(@RequestBody ConsumerProductData productData) {
 
 		shopservice.addProduct(productData);
@@ -86,21 +60,18 @@ public class MainController {
 		return "this done";
 	}
 
-	@GetMapping(value = "/products")
-	public String getAllProducts() {
-		String productsJson = "Nothing";
-		List<ProductEntity> allProducts = prodservice.getAllProducts();
-		for (ProductEntity p : allProducts) {
-			System.out.println(p.getInShop().getShopName());
-		}
-		try {
-			productsJson = ObjectParser.writeValueAsString(allProducts);
-		} catch (JsonProcessingException e) {
-			System.out.println(e.getMessage());
-		}
-
-		return productsJson;
-	}
+//	@GetMapping(value = "/products")
+//	public String getAllProducts() {
+//		String productsJson = "Nothing";
+//		List<ProductEntity> allProducts = prodservice.getAllProducts();
+//		try {
+//			productsJson = ObjectParser.writeValueAsString(allProducts);
+//		} catch (JsonProcessingException e) {
+//			System.out.println(e.getMessage());
+//		}
+//
+//		return productsJson;
+//	}
 
 	@GetMapping(value = "/products/{value}")
 	public String getMatchedProducts(@PathVariable(value = "value") String productName) {
@@ -120,6 +91,12 @@ public class MainController {
 
 		return jsonProducts;
 
+	}
+	
+	@RequestMapping("/signuout")
+	public String signout() {
+		
+		return "Logged Out";
 	}
 
 }

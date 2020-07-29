@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.volt.awssystem.jsonconsumer.ConsumerProductData;
 import com.volt.awssystem.jsonconsumer.ConsumerShopData;
 import com.volt.awssystem.repository.IShopRepo;
+import com.volt.awssystem.repository.ProductEntity;
 import com.volt.awssystem.repository.ShopEntity;
 
 @Service
@@ -60,6 +61,13 @@ public class ShopServices implements IShopService {
 		}
 		return false;
 	}
-	
+
+	@Override
+	public List<ProductEntity> getShopProducts(UUID shopId) {
+
+		ShopEntity shop = shoprepo.findById(shopId).get();
+		return shop.getProducts();
+
+	}
 
 }

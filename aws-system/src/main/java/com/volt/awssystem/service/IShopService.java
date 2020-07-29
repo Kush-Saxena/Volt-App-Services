@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.volt.awssystem.jsonconsumer.ConsumerProductData;
 import com.volt.awssystem.jsonconsumer.ConsumerShopData;
+import com.volt.awssystem.repository.ProductEntity;
 import com.volt.awssystem.repository.ShopEntity;
 
 public interface IShopService {
@@ -16,5 +17,7 @@ public interface IShopService {
 	public UUID addShop(ConsumerShopData shopData);
 
 	public boolean addProduct(ConsumerProductData productData);
+
+	public List<ProductEntity> getShopProducts(UUID shopId);
 
 }

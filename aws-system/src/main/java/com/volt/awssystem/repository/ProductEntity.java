@@ -29,7 +29,7 @@ public class ProductEntity {
 	private float price;
 
 	@Column(nullable = false)
-	private boolean productOn;
+	private boolean isOn;
 
 	@JsonBackReference
 	@ManyToOne(optional = false)
@@ -56,12 +56,12 @@ public class ProductEntity {
 		this.price = price;
 	}
 
-	public boolean isProductOn() {
-		return productOn;
+	public boolean isOn() {
+		return isOn;
 	}
 
-	public void setProductOn(boolean productOn) {
-		this.productOn = productOn;
+	public void setOn(boolean isOn) {
+		this.isOn = isOn;
 	}
 
 	public ShopEntity getInShop() {
@@ -78,10 +78,9 @@ public class ProductEntity {
 		this.productName = productName;
 		this.price = price;
 		this.inShop = inShop;
-		this.productOn = true;
+		this.isOn = true;
 	}
 
-	
 	protected ProductEntity() {
 		super();
 	}

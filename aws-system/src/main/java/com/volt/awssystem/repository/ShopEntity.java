@@ -52,11 +52,11 @@ public class ShopEntity {
 	@Column(nullable = false)
 	private int openHours;
 
-	@Transient
-	private LocalTime closingTime;
-
 	@Column(nullable = false)
 	private int deliveryTime;
+
+	@Column(nullable = false)
+	private boolean isOn = true;
 
 	// constructors
 
@@ -73,10 +73,10 @@ public class ShopEntity {
 
 	}
 
-	@PostLoad
-	private void populateClosingTime() {
-		this.closingTime = openingTime.plusHours(openHours);
-	}
+//	@PostLoad
+//	private void afterLoad() {
+//		this.closingTime = openingTime.plusHours(openHours);
+//	}
 
 	protected ShopEntity() {
 		super();
@@ -137,14 +137,6 @@ public class ShopEntity {
 
 	public void setOpenHours(int openHours) {
 		this.openHours = openHours;
-	}
-
-	public LocalTime getClosingTime() {
-		return closingTime;
-	}
-
-	public void setClosingTime(LocalTime closingTime) {
-		this.closingTime = closingTime;
 	}
 
 	public int getDeliveryTime() {
